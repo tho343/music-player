@@ -121,8 +121,25 @@ function progressBar(e){
         }
     }
 }
+//update progress bar
+function updateProgressBar(e){
+    console.log(e);
+    const width = this.clientWidth;
+    console.log('width ',width);
+    const offsetX = e.offsetX;
+    console.log('offsetX ',offsetX);
+    const progressPercent = Math.floor((offsetX/width) *100);
+    console.log('percent ', progressPercent);
+    progress.style.width = `${progressPercent}%`;
+    const {duration} = audio;
+    audio.currentTime = (offsetX / width) *duration;
+    
+}
 
 audio.addEventListener('timeupdate',progressBar);
+//play next song, when the currentsong ended, fire the 'end' event listener
+audio.addEventListener('ended',nextSong);
+progressContainer.addEventListener('click',updateProgressBar);
 prevBtn.addEventListener("click",prevSong);
 nextBtn.addEventListener("click",nextSong);
 playBtn.addEventListener("click", ()=> { isPlaying? pauseSong() : playSong()});
