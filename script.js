@@ -8,6 +8,9 @@ const title = document.getElementById('title');
 const artist = document.getElementById('artist');
 const audio = document.querySelector('audio');
 const image = document.querySelector('img');
+const durationTime = document.getElementById('duration-time');
+const current = document.getElementById('current-time');
+
 const songs = [
     {
         name: "jacinto-1",
@@ -81,10 +84,41 @@ function prevSong(){
 //update progress bar
 function progressBar(e){
     if(isPlaying){
+        
         const {duration, currentTime} = e.srcElement;
         const progressPercentage = (currentTime /duration) * 100;
-        console.log(progressPercentage);
         progress.style.width = `${progressPercentage}%`;
+        //update duration time
+
+        let durationTimeMinute = Math.floor(duration / 60);
+        if(durationTimeMinute < 10){
+            durationTimeMinute = `0${durationTimeMinute}`;
+        }
+       let durationTimeSecond = Math.floor(duration%60);
+        if(durationTimeSecond < 10){
+            durationTimeSecond = `0${durationTimeSecond}`;
+        }
+
+        let formatedDuration = `${durationTimeMinute}:${durationTimeSecond}`;
+        if(durationTimeSecond){
+            durationTime.textContent = formatedDuration;
+        }
+        //update current time
+        let currentTimeMinute = Math.floor(currentTime / 60);
+        if(currentTimeMinute < 10){
+            currentTimeMinute = `0${currentTimeMinute}`;
+        }
+        
+       let currentTimeSecond = Math.floor(currentTime%60);
+        if(currentTimeSecond < 10){
+            currentTimeSecond = `0${currentTimeSecond}`;
+        }
+
+        let formatedCurrent = `${currentTimeMinute}:${currentTimeSecond}`;
+        
+        if(currentTimeSecond){
+            current.textContent = formatedCurrent;
+        }
     }
 }
 
